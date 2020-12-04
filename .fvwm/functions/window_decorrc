@@ -1,0 +1,64 @@
+#=======================================================================
+# Aqui estarao quase todos os estilos das barras de titulos da janelas,
+# incluido cores, largura, e botoes.
+#=======================================================================
+
+# Cores das janelas 
+ Colorset 1 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #121212 100
+
+# Cores das bordas
+Colorset 2 bg #121212
+
+AddTitleStyle Colorset NN PP
+   Style * TitleAtLeft
+   Style * Colorset 1, HilightColorset 1        # Com de fundo e dos textos
+   Style * BorderWidth 1, HandleWidth 8         # Largura das bordas
+   BorderStyle Inactive Colorset 2 -- flat      # Cor das janelas inativas
+   BorderStyle Active   Colorset 2 -- flat      # Cor das janelas ativas
+   TitleStyle AllInactive Colorset 1 -- flat    # Cor do titulo inactivo
+   TitleStyle AllActive   Colorset 1 -- flat    # Cor do titulo ativo
+   ButtonStyle All -- UseTitleStyle flat
+
+#===========================================
+# Localizaçao dos botoes da barra de titulos
+#===========================================
+
+# [Esquerda]    [Titulo]      [Direita]
+# [1 3 5 7 9]  [T T T T T]   [0 8 6 4 2]
+
+# Estilo do titulo
+TitleStyle Centered Height 35 -- Flat
+ButtonStyle Reset
+ButtonStyle All -- Flat
+ButtonStyle All -- UseTitleStyle
+AddButtonStyle All Vector 2 1x1@4 1x1@4
+
+AddButtonStyle 2 \
+  ActiveUp (Pixmap $[icons]/1.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/0.png -- Flat) \
+  Inactive (Pixmap $[icons]/0.png -- Flat)
+
+AddButtonStyle 4 \
+  ActiveUp (Pixmap $[icons]/2.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/0.png -- Flat) \
+  Inactive (Pixmap $[icons]/0.png -- Flat)
+
+AddButtonStyle 6 \
+  ActiveUp (Pixmap $[icons]/3.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/0.png -- Flat) \
+  Inactive (Pixmap $[icons]/0.png -- Flat)
+
+#===================================================================
+# Essa é uma parte importante 
+# aqui voce devera, definir oque cada botao da janela devera fazer
+#===================================================================
+
+# [Mouse] [Click] [Botao] [Açao]
+
+# Fecha a janelas
+Mouse 1 2 A Close
+# Maximiza e desmaximiza a janela   
+Mouse 1 4 A Maximize ToggleTitle
+# Semelhante a minimizar, porem ira criar uma thumbnail da janela
+Mouse 1 6 A Thumbnail

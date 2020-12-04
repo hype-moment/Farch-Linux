@@ -1,0 +1,78 @@
+#============================================
+# Aqui sao postos todos os programas do menu
+#============================================
+
+# Cores com transparencia 
+Colorset 3 RootTransparent, fg #FFFFFF, bg #121212,\
+   hi #121212 , sh #121212, Tint #121212 90, bgTint #121212 90
+
+
+# Aparencia e comportamento
+MenuStyle * MenuColorset 3, ActiveColorset 1, GreyedColorset 1, TitleColorset 1
+MenuStyle * Hilight3DOff, HilightBack, HilightTitleBack, SeparatorsLong
+MenuStyle * TrianglesSolid, TrianglesUseFore
+MenuStyle * PopupDelayed, PopupDelay 300, PopdownImmediately
+MenuStyle * AnimationOn, AutomaticHotkeysOn
+MenuStyle * PopupOffset -5 100, TitleWarpOn
+MenuStyle * BorderWidth 1
+#MenuStyle * ItemFormat "%|%9.9i%5.3l%5.8>%|"
+MenuStyle * ItemFormat "%|%5.5i%1.3l%2.3>%|"
+MenuStyle * Font "xft:Sans:Bold:size=12:antialias=True"
+
+# Funçoes do menu
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot "Fvwm" Title
+
+
++ "Quit%icons/quit.png%" Module FvwmScript FvwmScript-ConfirmQuit
++ "Refresh%icons/refresh.png%" Refresh
++ "Restart%icons/restart.png%" Restart
+
++ "Window position" Popup MenuWindowPosition
++ "Mode" Popup MenuMode
++ "Windows icons" Popup MenuWindowsIcons
++ "Screenshot menu" Popup MenuScreenshot
++ "Window Color" Popup MenuWindowColors
++ "Music Control" Popup MenuMusicControl
+
+DestriMenu MenuWindowPosition
+AddToMenu MenuWindowPosition "Window Position" Title
+
++ "%$[HOME]/.fvwm/icons/Menu/wposition/top.png%     Top     " Exec exec ~/.fvwm/scripts/Set_Window_Bar.sh top
++ "%$[HOME]/.fvwm/icons/Menu/wposition/left.png%     Left     " Exec exec ~/.fvwm/scripts/Set_Window_Bar.sh left
++ "%$[HOME]/.fvwm/icons/Menu/wposition/botton.png%     Botton     " Exec exec ~/.fvwm/scripts/Set_Window_Bar.sh bot
++ "%$[HOME]/.fvwm/icons/Menu/wposition/right.png%     Right     " Exec exec ~/.fvwm/scripts/Set_Window_Bar.sh right
+
+DestriMenu MenuMode
+AddToMenu MenuMode "Mode" Title
+
++ "%$[HOME]/.fvwm/icons/Menu/mode/dark.png%     Dark Mode     " Exec exec $(~/.fvwm/scripts/mode.sh $(light)) 
++ "%$[HOME]/.fvwm/icons/Menu/mode/light.png%     Light Mode     " Exec exec $(~/.fvwm/scripts/mode.sh $(dark))
+
+DestriMenu MenuWindowsIcons
+AddToMenu MenuWindowsIcons "MenuWindows Icons" Title
+
++ "%$[HOME]/.fvwm/icons/Menu/wicons/circles.png%     Circles     " Exec exec sed -i 's/icons\/.*/icons\/circles/g' ~/.fvwm/config
++ "%$[HOME]/.fvwm/icons/Menu/wicons/blocks.png%     Blocks     " Exec exec sed -i 's/icons\/.*/icons\/blocks/g' ~/.fvwm/config 
++ "%$[HOME]/.fvwm/icons/Menu/wicons/w10.png%     W10     " Exec exec sed -i 's/icons\/.*/icons\/w10/g' ~/.fvwm/config
++ "%$[HOME]/.fvwm/icons/Menu/wicons/macos.png%     MacOS     " Exec exec sed -i 's/icons\/.*/icons\/macos/g' ~/.fvwm/config
++ "%$[HOME]/.fvwm/icons/Menu/wicons/simple.png%     Simple     " Exec exec sed -i 's/icons\/.*/icons\/wcircles/g' ~/.fvwm/config
+
+
+DestroyMenu MenuWindowColors
+AddToMenu   MenuWindowColors "Window Colors" Title
+
++ "%$[HOME]/.fvwm/icons/Menu/colors/red.png%     Red     " Exec exec sed -i 's/Tint #.*/Tint #F12345 50/g' ~/.fvwm/functions/window_decorrc   
++ "%$[HOME]/.fvwm/icons/Menu/colors/blue.png%     Blue     " Exec exec sed -i 's/Tint #.*/Tint #1E90FF 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/green.png%     Green     " Exec exec sed -i 's/Tint #.*/Tint #00FF7F 50/g' ~/.fvwm/functions/window_decorrc
+
++ "%$[HOME]/.fvwm/icons/Menu/colors/purple.png%     Purple     " Exec exec sed -i 's/Tint #.*/Tint #4B0082 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/orange.png%     Orange     " Exec exec sed -i 's/Tint #.*/Tint #FF8C00 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/crimson.png%     Crimson     " Exec exec sed -i 's/Tint #.*/Tint #DC143C 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/yellow.png%     Yellow     " Exec exec sed -i 's/Tint #.*/Tint #FFFF00 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/dark.png%     Dark     " Exec exec sed -i 's/Tint #.*/Tint #121212 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/light.png%     Light     " Exec exec sed -i 's/Tint #.*/Tint #F5F5F5 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/pink.png%     Pink     " Exec exec sed -i 's/Tint #.*/Tint #FF1493 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/salmon.png%     Salmon     " Exec exec sed -i 's/Tint #.*/Tint #FA8072 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/coral.png%     Coral     " Exec exec sed -i 's/Tint #.*/Tint #FF7F50 50/g' ~/.fvwm/functions/window_decorrc
++ "%$[HOME]/.fvwm/icons/Menu/colors/gray.png%     Gray     " Exec exec sed -i 's/Tint #.*/Tint #808080 50/g' ~/.fvwm/functions/window_decorrc

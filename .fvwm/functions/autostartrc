@@ -1,0 +1,50 @@
+#=======================================================
+# Aqui voçe pode por tudo que deve iniciar com o sistema
+# no momento do boot.
+#=======================================================
+
+# Start e restart
+DestroyFunc StartFunction
+AddToFunc   StartFunction
+
+# Iniciarão no boot
+DestroyFunc InitFunction
+AddToFunc InitFunction
+
+# Ira executar a atualizaçao do sistema
++ I Exec exec sh ~/.fvwm/yad/updates.sh
+
+# Ira iniciar o script que borra a imagem de fundo ao abrir uma janela 
+# + I Exec exec sh ~/.fvwm/scripts/blur.sh
+
+# Ira iniciar o picom, responssavel pela tranparencia e composição
++ I Exec exec picom --config ~/.fvwm/picom.conf 
+
+# Ira iniciar a o lançador de programas plank
++ I Exec exec plank 
+
+# Ira iniciar a o painel tint2
++ I Exec exec tint2
+
+# Ira iniciar o painel de ferramentas
++ I Exec exec tint2 -c ~/.config/tint2/tools.tint2rc
+
+# Ira iniciar o icone de controle de volume
++ I Exec exec volumeicon 
+
+# Ira setar a resoluçao da tela
+# Se sua tela tem uma resolução diferente, mude aqui
++ I Exec exec xrandr -s 1600x900
+
+# Ira iniciar o script gerado pelo feh.
+# Para que ele funcione, voçe de setar um planp de fundo antes,
+# usando o feh
++ I Exec exec ~/.fehbg
+
+# Ira setar o teclado para (pt_BR)
+# Se voçe usa outro padrao de teclado
+# mude para ele. 
++ I Exec exec setxkbmap -model abnt2 -layout br -variant abnt2 
+
+# Ira iniciar o programa responssavel pelas notificações
++ I Exec exec dunst 

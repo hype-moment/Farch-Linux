@@ -1,0 +1,39 @@
+#=======================================================
+# Aqui estarão todas as configuraçoes do mouse
+# exeto as das funçoes do cliques nos botões das janelas
+# esses estão em (window_decorrc)
+#=======================================================
+
+# Deley do click duplo
+ClickTime 250
+MoveThreshold 3
+
+# Estilo do focu com mouse
+Style * SloppyFocus, MouseFocusClickRaises
+
+# açoes do mouse no titulo da janela
+Mouse 1 T A RaiseMoveX Move Maximize 				# Move a janelas
+Mouse 1 FS A RaiseMove Resize 						# Redimenciona a janela
+Mouse 4 T A WindowShade True 						# Enrrola a janela
+Mouse 5 T A WindowShade False 						# Desenrrola a janela
+#Mouse 3 T A Menu MenuWindowOps 					# Abre o menu de opçoes da janela
+
+Mouse 1 A 4 Move 									# Super + click direito do mouse dentro da janela, move a janela
+
+## Raising Window
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+DestroyFunc RaiseMove
+AddToFunc RaiseMove
++ I Raise
++ M $0
+
+# Menus
+Mouse 1 R A
+
+# Janelas minimizas
+Mouse 1 I A Iconify off
+Mouse 3 I A Menu MenuIconOps

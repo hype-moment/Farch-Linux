@@ -1,0 +1,41 @@
+#===================================================
+# Acoes das janelas, tais como, se dividar na telas
+# e remover a barra de titulos
+#===================================================
+
+# Remove a barra de titulus da janela em foco
+DestroyFunc ToggleTitle
+AddToFunc   ToggleTitle
++ I ThisWindow (State 1) WindowStyle !Title
++ I TestRc (Match) State 1 False
++ I TestRc (Match) Break
++ I WindowStyle !Title
++ I State 1 False
+
+# Muda  a janela em foco para o lado esquerdo da tela
+DestroyFunc SnapLeft
+AddToFunc SnapLeft
++ I Move 0 0
++ I Maximize True 50 100
++ I Raise
+
+# Muda  ajanela em foco para o lado direito da tela
+DestroyFunc SnapRight
+AddToFunc SnapRight
++ I Maximize True 50 100
++ I Move -0 0
++ I Raise
+
+# Muda a janela em foco para a parte superior da tela
+DestroyFunc SnapHalf
+AddToFunc SnapHalf
++ I Maximize True 100 50 
++ I Move -0 0
++ I Raise
+
+# Muda a janela em foco para a parte inferior da tela
+DestroyFunc SnapQuarter
+AddToFunc SnapQuarter
++ I Maximize True 100 50
++ I Move 0 -0
++ I Raise

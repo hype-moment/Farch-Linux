@@ -1,0 +1,3 @@
+# Cores das bordas
+Colorset 2 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #F5F5F5 80

@@ -1,0 +1,508 @@
+#===============================
+# Source in external commands
+#===============================
+
+# >> Set ThumbnailCache
+SetEnv cache $[HOME]/.fvwm/cache/
+# >> Set Scripts Folder
+SetEnv scripts $[HOME]/.fvwm/scripts
+# >> Where Titlebar Icons 
+SetEnv icons $[HOME]/.fvwm/icons
+
+#===============================
+# Autostart programs
+#===============================
+
+# >> Start or restart
+DestroyFunc StartFunction
+AddToFunc   StartFunction
+
+DestroyFunc InitFunction
+AddToFunc InitFunction
++ I Exec exec picom --corner-radius 9 &
++ I Exec exec xrandr -s 1600x900 &
++ I Exec exec ~/.fehbg &
++ I Exec exec setxkbmap -model abnt2 -layout br -variant abnt2 &
++ I Exec exec dunst &
++ I Exec exec xfce4-notifyd &
+
+#================================
+# Thumbnail
+#================================
+
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I ThisWindow (Shaded) WindowShade
++ I PipeRead 'bash $[scripts]/crthumb "$[w.id]" "$[cache]"'
+
+# >> Restore window
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead 'bash $[scripts]/dethumb "$[w.id]" "$[cache]"'
+*FvwmEvent: deiconify DeThumbnail
+
+## To Toggle The Titlebar
+DestroyFunc ToggleTitle
+AddToFunc   ToggleTitle
++ I ThisWindow (State 1) WindowStyle !Title
++ I TestRc (Match) State 1 False
++ I TestRc (Match) Break
++ I WindowStyle !Title
++ I State 1 False
+
+# >> Window Snapping
+# >> Snap left
+DestroyFunc SnapLeft
+AddToFunc SnapLeft
++ I Move 0 0
++ I Maximize True 50 100
++ I Raise
+
+# >> Snap right
+DestroyFunc SnapRight
+AddToFunc SnapRight
++ I Maximize True 50 100
++ I Move -0 0
++ I Raise
+
+# >> Zoom unmaximize large
+DestroyFunc SnapHalf
+AddToFunc SnapHalf
++ I Maximize True 90 90
++ I Move 50-50w 50-50w
++ I Raise
+
+# >> Zoom unmaximize small
+DestroyFunc SnapQuarter
+AddToFunc SnapQuarter
++ I Maximize True 50 50
++ I Move 50-50w 50-50w
++ I Raise
+
+# >> Zoom unmaximize tiny
+DestroyFunc SnapTiny
+AddToFunc SnapTiny
++ I Maximize True 36 28
++ I Move 50-50w 50-50w
++ I Raise
+
+## Raising Window
+DestroyFunc RaiseMoveX
+AddToFunc RaiseMoveX
++ I Raise
++ M $0
++ D $1
+DestroyFunc RaiseMove
+AddToFunc RaiseMove
++ I Raise
++ M $0
+
+#==========================
+# Keys
+#==========================
+
+Key Tab A 4 Next (CurrentDesk, AcceptsFocus) Focus
+Key Tab A S4 Prev (CurrentDesk, AcceptsFocus) Focus
+
+# >> Ignore Numlock and other modifiers for bindings
+IgnoreModifiers L25
+
+# >> Launching apps
+Key Return A 4 Exec xfce4-terminal 		  # > Terminal
+Key c A 4 Exec chromium 				        # > Navegator
+Key f A 4 Exec chromium faceboock.com 	# > FaceBook
+Key y A 4 Exec chromium youtube.com 	  # > YouTube
+Key t A 4 Exec thunar  				        	# > File Manager
+Key s A 4 Exec subl 				          	# > Text Editor
+
+# >> Volume control
+Key XF86AudioRaiseVolume A A Exec pactl set-sink-volume 0 +5%  # > Volume +5
+Key XF86AudioLowerVolume A A Exec pactl set-sink-volume 0 -5%  # > Volume -5
+Key XF86AudioMute A A Exec pactl set-sink-mute 0 toggle 	     # > Volume Muted
+
+# > PrintScreen
+Key Print A 4 Exec exec scrot 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+
+# > Wondows and workspace
+# > Close, maximize, minimize, quit and restart
+Key q WT 4 Close
+Key space WT 4 Maximize
+Key a WT 4S Thumbnail
+Key r A 4S Restart
+Key e A 4S Quit
+
+Key Return A 4S Exec $[scripts]/fterm.sh
+
+Key 1 A 4 GotoDesk 0 0
+Key 2 A 4 GotoDesk 0 1
+Key 3 A 4 GotoDesk 0 2
+Key 4 A 4 GotoDesk 0 3
+Key 5 A 4 GotoDesk 0 4
+Key 6 A 4 GotoDesk 0 5
+Key 7 A 4 GotoDesk 0 6
+Key 8 A 4 GotoDesk 0 7
+
+# > Super + Shift + 1-4 to send to another workspace
+Key 1 A 4S MovetoDesk 0 0
+Key 2 A 4S MovetoDesk 1 0
+Key 3 A 4S MovetoDesk 2 0
+Key 4 A 4S MovetoDesk 3 0
+Key 5 A 4S MovetoDesk 4 0
+Key 6 A 4S MovetoDesk 5 0
+Key 7 A 4S MovetoDesk 6 0
+Key 8 A 4S MovetoDesk 7 0
+
+# > Super + Shift + Left/Right to send to prev/next workspace
+Key Left A 4S MoveToPage -1p +0p
+Key Right A 4S MoveToPage +1p +0p
+
+# > Aero Snap
+Key Left A 4 SnapLeft
+Key Right A 4 SnapRight
+Key Up A 4 SnapHalf
+Key Down A 4 SnapQuarter
+#Key n A 4 SnapTiny
+
+# > Move to the edge of the screen
+Key Left A C4 Move 0 w+0
+Key Right A C4 Move -0 w+0
+Key Up A C4 Move w+0 0
+Key Down A C4 Move w+0 -0
+
+# > Free resize using mouse
+Key r A M Resize
+
+# > Super + D Toggle window decoration
+key d TW 4 ToggleTitle
+
+#================================
+# MOUSE
+#================================
+# > Double Click Delay
+ClickTime 250
+MoveThreshold 3
+
+## SloppyFocus Instead of ClickToFocusrestart
+Style * SloppyFocus, MouseFocusClickRaises
+
+## Titlebar Itself
+Mouse 1 T A RaiseMoveX Move Maximize
+Mouse 1 FS A RaiseMove Resize
+Mouse 4 T A WindowShade True
+Mouse 5 T A WindowShade False
+#Mouse 3 T A Menu MenuWindowOps
+
+Mouse 1 A 4 Move
+
+## Rootmenu on The Desktop
+Mouse 1 R A Exec exec jgmenu_run
+Mouse 3 R A WindowList
+#Mouse 2 R A Menu MenuWindowOpsLong
+
+## On minimized windows
+Mouse 1 I A Iconify off
+Mouse 3 T A Resize
+
+## Root Menu on The Desktop
+DestroyMenu MenuFvwmRoot
+AddToMenu   MenuFvwmRoot "Open Menu" Title
++ "Terminal" Exec exec xfce4-terminal
++ "Web" Popup MenuWeb
++ "Tools" Popup MenuTools
++ "Midia" Popup MenuMidia
++ "Power" Popup MenuPower
+
+## Root Menu >> Web
+DestroyMenu MenuWeb
+AddToMenu   MenuWeb "Web" Title
+Test (x chromium) + "Chromium" Exec exec chromium
+Test (x chromium) + "FaceBook" Exec exec chromium facebook.com
+Test (x chromium) + "YouTube" Exec exec chromium youtube.com
+
+## Root Menu >> Tools
+DestroyMenu MenuTools
+AddToMenu   MenuTools "Tools" Title
+Test (x xfce4-terminal) + "Terminal" Exec exec xfce4-terminal
+Test (x ranger) + "Ranger" Exec exec xfce4-terminal -e ranger
+Test (x subl) + "Sublime" Exec exec subl
+
+## Root Menu >> Midia
+DestroyMenu MenuMidia
+AddToMenu MenuMidia "Midia" Title
+Test (x mpd) + "Music" Exec exec xfce4-terminal -e ncmpcpp & mpd
+Test (x clipgrab) + "ClipGrab" Exec exec clipgrab
+Test (x simplescreenrecorder) + "Recorder Desktop" Exec exec simplescreenrecorder
+
+## Root Menu >> Power
+DestroyMenu MenuPower
+AddToMenu MenuPower "Power" Title
++ "ShutDown" Exec exec shutdown now
++ "Reboot" Exec exec reboot
++ "Refresh" Refresh
++ "Restart" Restart
++ "Quit" Quit
+
+## Titlebar Right Click
+DestroyMenu MenuWindowOps
+AddToMenu   MenuWindowOps
++ "Send To" Popup MenuSendTo
++ "Move" Move
++ "Resize" Resize
++ "Iconify" Iconify
++ "Maximize" Maximize
++ "Shade" WindowShade
++ "Stick" Stick
++ "" Nop
++ "Close" Close
++ "More..." Menu MenuWindowOpsLong This 0 0
+
+## Titlebar Right Click >> More
+DestroyMenu MenuWindowOpsLong
+AddToMenu   MenuWindowOpsLong
++ "Send To" Popup MenuSendTo
++ "Move" Move
++ "Resize" Resize
++ "(De)Iconify" Iconify
++ "(Un)Maximize" Maximize
++ "(Un)Shade" WindowShade
++ "(Un)Sticky" Stick
++ "(No)TitleBar" Pick (CirculateHit) ToggleTitle
++ "" Nop
++ "Close" Close
++ "Destroy" Destroy
++ "" Nop
++ "Raise" Raise
++ "Lower" Lower
++ "" Nop
++ "StaysOnTop" Pick (CirculateHit) Layer 0 6
++ "StaysPut" Pick (CirculateHit) Layer 0 4
++ "StaysOnBottom" Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "Identify" Module FvwmIdent
+
+## Right Click on Minimized Window
+DestroyMenu MenuIconOps
+AddToMenu   MenuIconOps
++ "(De)Iconify" Iconify
++ "(Un)Maximize" Maximize
++ "(Un)Shade" WindowShade
++ "(Un)Sticky" Stick
++ "(No)TitleBar" Pick (CirculateHit) ToggleTitle
++ "" Nop
++ "Close" Close
++ "Destroy" Destroy
++ "" Nop
++ "Raise" Raise
++ "Lower" Lower
++ "" Nop
++ "StaysOnTop" Pick (CirculateHit) Layer 0 6
++ "StaysPut" Pick (CirculateHit) Layer 0 4
++ "StaysOnBottom" Pick (CirculateHit) Layer 0 2
++ "" Nop
++ "Identify" Module FvwmIdent
+
+## Titlebar Right Click >> Send To
+DestroyMenu MenuSendTo
+AddToMenu MenuSendTo
++ " Workspace 1 " MoveToPage 0 0
++ " Workspace 2 " MoveToPage 1 0
++ " Workspace 3 " MoveToPage 2 0
++ " Workspace 4 " MoveToPage 3 0
+
+#===============================
+#Set theme windows
+#===============================
+
+# >>> Hype Theme
+ Colorset 1 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #1A1B1F 85, bgTint 15  # tint is optional
+# >>> Like Theme 
+ Colorset 2 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #12172D  85, bgTint  15  # tint is optional
+# >>> Flamingo Theme
+ Colorset 3 RootTransparent buffer, fg #232323, bg average, \
+     Tint #ffd5c5  85, bgTint 75  # tint is optional
+# >>> Future Theme 
+ Colorset 4 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #131c26  85, bgTint 75  # tint is optional
+# >>> Planetary Theme
+ Colorset 5 RootTransparent buffer, fg #FFFFFF, bg average, \
+     Tint #120f2a  85, bgTint 75  # tint is optional
+# >>> Boreal Theme 
+ Colorset 6 RootTransparent buffer, fg #121212, bg average, \
+     Tint #E0FFFF  85, bgTint 75  # tint is optional
+# >>> Tour Theme 
+ Colorset 7 RootTransparent buffer, fg #121212, bg average, \
+     Tint #FFFFFF  85, bgTint 75  # tint is optional
+
+
+AddTitleStyle Colorset NN PP
+   Style * TitleAtLeft
+   Style * Colorset 1, HilightColorset 1  # to use fg and bg
+   Style * BorderWidth 0, HandleWidth 20
+   BorderStyle Inactive Colorset 1 -- flat
+   BorderStyle Active   Colorset 1 -- flat
+   TitleStyle AllInactive Colorset 1 -- flat
+   TitleStyle AllActive   Colorset 1 -- flat
+   ButtonStyle All -- UseTitleStyle flat
+
+#=================================
+# Style
+#=================================
+
+DesktopSize 3x3
+DesktopName 0 1
+DesktopName 1 2
+DesktopName 2 3
+DesktopName 3 4
+DesktopName 4 5
+DesktopName 5 6
+DesktopName 6 7
+DesktopName 7 8
+DesktopName 8 9
+DesktopName 9 10
+
+# > Default Font
+DefaultFont "xft:Nasa :size=8"
+
+# > Place It On Center instead of MinOverlapPlacement
+Style * PositionPlacement Center
+Style * !GrabFocusOff, UsePPosition
+
+## Transient Windows, Such as Open File Windows
+Style * DecorateTransient, StackTransientParent
+Style * FPGrabFocusTransient, FPReleaseFocusTransient
+
+## Window Shade / Roll Up
+Style * WindowShadeScrolls, WindowShadeSteps 10
+
+## Disable Icons from Appearing on Desktop
+Style * !Icon
+
+## Window Specific Styles
+Style ConfirmQuit !Title, PositionPlacement Center, WindowListSkip, Layer 6
+Style FvwmIdent WindowListSkip
+
+## Workspace
+DesktopSize 4x1
+EdgeScroll 0 0
+EdgeResistance 0
+EdgeThickness 0
+Style * EdgeMoveDelay 350
+Style * EdgeMoveResistance 350
+# > EmwhBaseStruts [left] [right] [top] [bottom]
+EwmhBaseStruts 		   10     10 	    10	   10
+
+## Minimize to Thumbnail Placeholder
+Style * IconBox 300x900-1290+15, IconGrid 1 2, \
+IconFill top left, !IconTitle, IconBackgroundRelief 0
+
+Style * RoundedCorners
+# Hide geometry window when moving and resizing
+HideGeometryWindow    Always
+Style * BorderUnderTitle
+Style * ResizeOutlineThin
+
+## Special Rules
+Style bar* !Title, BorderWidth 0, HandleWidth 0, MWMButtons, MwmBorder, MwmDecor, MwmFunctions
+Style * CascadePlacement
+
+# Sets all windows to OpaqueMove (vs a wired frame) and  windows will
+# snap to each other and the edge of the screen.
+OpaqueMoveSize unlimited
+Style * ResizeOpaque, SnapAttraction 50 SameType ScreenAll, SnapGrid
+
+Style "xfce4-terminal" PositionPlacement Center
+
+Style "tint2" PositionPlacement Right
+Style tint2 !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
+                 WindowListSkip, NeverFocus, Layer 6
+
+Style xfce4-panel !Title, PositionPlacement Right, !Borders, Handles, Sticky, \
+                 WindowListSkip, NeverFocus, Layer 1
+
+Style feh !Title, Borders
+
+Style viewnior !Title, Borders,
+
+#============================
+# Windows Decor
+#============================
+
+# > Buttons Locations 1 3 5 7 9 T T T T T 0 8 6 4 2
+TitleStyle Centered Height 35 -- Flat
+ButtonStyle Reset
+ButtonStyle All -- Flat
+ButtonStyle All -- UseTitleStyle
+
+AddButtonStyle All Vector 2 1x1@4 1x1@4
+
+AddButtonStyle 2 \
+	ActiveUp (Pixmap $[icons]/ponto.png -- Flat) \
+	ActiveDown (Pixmap $[icons]/.png -- Flat) \
+	Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 4 \
+	ActiveUp (Pixmap $[icons]/ponto2.png -- Flat) \
+	ActiveDown (Pixmap $[icons]/.png -- Flat) \
+	Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 6 \
+	ActiveUp (Pixmap $[icons]/ponto3.png -- Flat) \
+	ActiveDown (Pixmap $[icons]/.png -- Flat) \
+	Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 8 \
+  ActiveUp (Pixmap $[icons]/ponto4.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 0 \
+  ActiveUp (Pixmap $[icons]/ponto5.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 9 \
+  ActiveUp (Pixmap $[icons]/proximo.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 3 \
+  ActiveUp (Pixmap $[icons]/voltar.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 7 \
+  ActiveUp (Pixmap $[icons]/toque.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 5 \
+  ActiveUp (Pixmap $[icons]/pausa.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+AddButtonStyle 1 \
+  ActiveUp (Pixmap $[icons]/audio.png -- Flat) \
+  ActiveDown (Pixmap $[icons]/.png -- Flat) \
+  Inactive (Pixmap $[icons]/.png -- Flat)
+
+
+#===========================
+# Click actions
+#===========================
+
+## Titlebar Buttons
+Mouse 1 2 A Close
+Mouse 1 4 A Maximize
+Mouse 1 6 A Thumbnail
+Mouse 1 8 A Exec notify-send "`date +%H:%M`" "`date +%D && curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo`" --icon=~/.fvwm/icons/Relogio.png
+Mouse 1 0 A Exec notify-send ScreenShot --icon=~/.fvwm/icons/Print.png && scrot 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f' 
+
+# Music play Buttons
+Mouse 1 3 A Exec sh ~/.fvwm/scripts/prev-music.sh
+Mouse 1 9 A Exec sh ~/.fvwm/scripts/next-music.sh
+Mouse 1 7 A Exec mpc play && notify-send "`mpc current`" --icon=~/.fvwm/icons/onda.png
+Mouse 1 5 A Exec mpc pause && notify-send "Paused" --icon=~/.fvwm/icons/pare.png
+Mouse 1 1 A Exec mpd && mpc play && notify-send "`mpc current`" --icon=~/.fvwm/icons/toque.png
+Mouse 3 1 A Exec pkill mpd && notify-send -u critical "Mpd finished" --icon=~/.fvwm/icons/pare.png

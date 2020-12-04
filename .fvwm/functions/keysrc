@@ -1,0 +1,102 @@
+#=======================================
+# Aqui estão todos os atalhos do teclado
+#=======================================
+
+# Função responssavel pelo alt+tab.
+# Essa funçao faz a troca de janelas
+SetEnv DIR Next
+
+AddToFunc FocusRaiseAndStuff
++ I Iconify off
++ I Focus
++ I Raise
+
+AddToFunc SwitchWindow
++ I $[DIR] (CurrentPage, !Iconic, !Sticky) FocusRaiseAndStuff
++ I Deschedule 134000
++ I PipeRead `[ "$[DIR]" == "Prev" ] && \
+    echo 'SetEnv NDIR Next' || \
+    echo 'SetEnv NDIR Prev'`
++ I Schedule 700 134000 SetEnv DIR $[NDIR]
+
+Key Tab A 4  SwitchWindow
+
+
+# Essa função ignora o NunLock e o CapsLock
+IgnoreModifiers L25
+
+# Aqui estarão os programas que sarao abertos por atalhos do teclado
+Key Return A 4 Exec xfce4-terminal 		 # > Terminal
+Key c A 4 Exec chromium                  # > Navegator
+Key f A 4 Exec chromium faceboock.com 	 # > FaceBook
+Key y A 4 Exec chromium youtube.com 	 # > YouTube
+Key t A 4 Exec thunar 				     # > File Manager
+Key s A 4 Exec subl 				     # > Text Editor
+
+# Controle de volume (Pulseaudio)
+Key XF86AudioRaiseVolume A A Exec pactl set-sink-volume 0 +5%  # > Volume +5
+Key XF86AudioLowerVolume A A Exec pactl set-sink-volume 0 -5%  # > Volume -5
+Key XF86AudioMute A A Exec pactl set-sink-mute 0 toggle 	      # > Volume Muted
+
+# Thumbnail
+
+Key d A 4S DeThumbnail
+Key T a 4S Thumbnail
+
+# Controle de volume (Alsa)
+
+# Esse comando do teclado ira tirar um print da tela
+Key Print A 4 Exec exec scrot 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+
+# Esse comando do teclado chama um menu na tela,
+# para controlar o programa de musicas (Mpd)
+Key m A 4 Exec exec $[HOME]/.fvwm/scripts/mpd.sh
+
+# Esse comando de teclado chama um menu na tela,
+# para que o usuario escolha onde a barra de titulos das janelas estarão localizadas
+Key w A 4 Exec exec $[HOME]/.fvwm/scripts/Set_Window_Bar.sh
+
+# Esse comando do teclado ira chamar um menu na tela,
+# dando opçoes de prints da tela
+Key p A 4 Exec exec $[HOME]/.fvwm/scripts/print.sh
+
+#======================================================
+# Comandos do teclado para janelas e areas de trabalho
+#======================================================
+
+Key q WT 4 Close 			# Fecha a janela focada
+Key space WT 4 Maximize		# Maximiza a janela focada
+Key a WT 4S Thumbnail		# Minimiza a janela focada em forma de thumbnail
+Key r A 4S Restart 			# Restarta o jerenciador de janelas 
+Key e A 4S Quit 			# Encerra a sessão
+Key a A 4 WindowShade 		# Recolhe a janela focada para dentro da barra de titulos
+
+Key 1 A 4 GotoDesk 0 0 		# Vai para a area de trabalho 1
+Key 2 A 4 GotoDesk 0 1		# Vai para a area de trabalho 2
+Key 3 A 4 GotoDesk 0 2		# Vai para a area de trabalho 3
+Key 4 A 4 GotoDesk 0 3		# Vai para a area de trabalho 4
+Key 5 A 4 GotoDesk 0 4		# Vai para a area de trabalho 5
+Key 6 A 4 GotoDesk 0 5		# Vai para a area de trabalho 6
+Key 7 A 4 GotoDesk 0 6		# Vai para a area de trabalho 7
+Key 8 A 4 GotoDesk 0 7		# Vai para a area de trabalho 8
+
+Key 1 A 4S MovetoDesk 0 0   # Move a janela em foco para a area de trabalho 1
+Key 2 A 4S MovetoDesk 1 0	# Move a janela em foco para a area de trabalho 2
+Key 3 A 4S MovetoDesk 2 0	# Move a janela em foco para a area de trabalho 3
+Key 4 A 4S MovetoDesk 3 0   # Move a janela em foco para a area de trabalho 4
+Key 5 A 4S MovetoDesk 4 0	# Move a janela em foco para a area de trabalho 5
+Key 6 A 4S MovetoDesk 5 0 	# Move a janela em foco para a area de trabalho 6
+Key 7 A 4S MovetoDesk 6 0	# Move a janela em foco para a area de trabalho 7
+Key 8 A 4S MovetoDesk 7 0   # Move a janela em foco para a area de trabalho 8
+
+# Aero Snap
+Key Left A 4 SnapLeft 		# Divide a janela em foco no lado esquerdo da tela
+Key Right A 4 SnapRight		# Divide a janela em foco no lado direto da tela
+Key Up A 4 SnapHalf			# Divide a janela em foco no lado superior da tela
+Key Down A 4 SnapQuarter	# Divide a janela em foco no lado inferior da tela
+
+# Movimento das janelas
+Key Left A C4 Move 0 w+0 Maximize True 50 50 	# Move as janelas em foco para a esquerda, sem conciderar suas dimenssões
+Key Right A C4 Move -0 w+0 						# Move as janelas em foco para a dierita, sem conciderar suas dimenssões
+Key Up A C4 Move w+0 0							# Move as janelas em foco para a o topo, sem conciderar suas dimenssões
+Key Down A C4 Move w+0 -0						# Move as janelas em foco para baixo, sem conciderar suas dimenssões

@@ -1,0 +1,63 @@
+#=============================================================
+# Modificaçoes do gerenciado de janelas Fvwm
+# Modificado por: Diego Cesare <diegocesare300491@gmail.com>
+#=============================================================
+
+#================================================
+# Chamadas de elementos de configuraçoes externos
+#================================================
+
+# Local onde as thumnails ficarão armazenadas
+SetEnv cache $[HOME]/.fvwm/cache/
+
+# Local onde estão localizados os scrips
+SetEnv scripts $[HOME]/.fvwm/scripts
+
+# Local onde estão localizados os icones
+SetEnv icons $[HOME]/.fvwm/icons/classic
+
+#=========================================================
+# Chamadas dos modulos de configuraçoes.
+# Eles estão separados para serem melhores de configurar,
+# e ficarem melhores organizados.
+#=========================================================
+
+# Local onde estão os programas que irão iniciar co o sistema
+Read $[HOME]/.fvwm/functions/autostartrc
+
+# Local onde estao as configuraçoes das divizões das janelas
+Read $[HOME]/.fvwm/functions/snapsrc
+
+# Local onde estao os atalhos do teclado
+Read $[HOME]/.fvwm/functions/keysrc
+
+# Local onde esta as configurações do menu
+Read $[HOME]/.fvwm/functions/menurc
+
+# Local onde estao as funções do mouse
+Read $[HOME]/.fvwm/functions/mouserc
+
+# Local onde estão as configurações de estilo
+Read $[HOME]/.fvwm/functions/stylerc
+
+# Local onde estão as configurações das decorações das janelas 
+Read $[HOME]/.fvwm/functions/window_decorrc
+
+#================================
+# Thumbnail
+#================================
+
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ I ThisWindow (Shaded) WindowShade
++ I PipeRead 'bash $[scripts]/crthumb "$[w.id]" "$[cache]"'
+
+# >> Restore window
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ I PipeRead 'bash $[scripts]/dethumb "$[w.id]" "$[cache]"'
+*FvwmEvent: deiconify DeThumbnail
+
+## Minimize to Thumbnail Placeholder
+Style * IconBox 500x900-15+45, IconGrid 1 5, \
+IconFill top right, !IconTitle, IconBackgroundRelief 0
