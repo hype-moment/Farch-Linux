@@ -3,7 +3,7 @@ configuration {
   icon-theme: "Papirus";
   location: 1;
   yoffset: 40;
-  xoffset: 47; 
+  xoffset: 48; 
   fake-transparency: true;
   hide-scrollbar: true;
   bw: 0;
@@ -13,12 +13,12 @@ configuration {
 
 
 * {
-  background-color: #F5F5F5;
+  background-color: rgba(245, 245, 245, 0.56);
   font: "Ubuntu Bold 8";
 }
 
 window {
-  background-color: #F5F5F5;
+  background-color: rgba(245, 245, 245, 0.56);
   border: 0;
   border-radius: 0px;
   padding: 50;
@@ -30,18 +30,18 @@ window {
 mainbox {
   children: [inputbar, listview];
   border-radius: 8;
-  background-color: #F5F5F5;
+  background-color: rgba(245, 245, 245, 0.56);
   border-color: #121212;
 }
 
 #listview {
     padding: 20px;
-    columns: 5;
+    columns: 8;
     spacing: 4px;
     cycle: false;
     dynamic: true;
     layout: vertical;
-    background-color: transparent;
+    background-color: rgba(245, 245, 245, 0.56);
 }
 
 element {
@@ -49,18 +49,18 @@ element {
   orientation: vertical;
   padding: 15 15 15 15;
   border-radius: 6;
-  background-color: rgba(245, 245, 245, 0.9);
+  background-color: rgba(245, 245, 245, 0.56);
 }
 
 element selected {
-  background-color: @ac;
+  background-color: rgba(245, 245, 245, 0.56);
   border-color: #F12345;
   text-color: #121212;
   transition: 20;
 }
 
 element-icon {
-  size: 50;
+  size: 40;
   horizontal-align: 0.5;
   vertical-align: 0.5;
 }
@@ -74,7 +74,7 @@ element-text {
 inputbar {
   children: [entry];
   padding: 4px 8px 4px 8px;
-  background-color: #F5F5F5;
+  background-color: rgba(245, 245, 245, 0.56);
 }
 
 prompt {

@@ -3,7 +3,7 @@ configuration {
   icon-theme: "Papirus";
   location: 1;
   yoffset: 40;
-  xoffset: 47; 
+  xoffset: 48; 
   fake-transparency: true;
   hide-scrollbar: true;
   bw: 10;
@@ -13,12 +13,12 @@ configuration {
 
 
 * {
-  background-color: #121212;
+  background-color: rgba(18, 18, 18, 0.56);
   font: "Ubuntu Bold 8";
 }
 
 window {
-  background-color: #121212;
+  background-color: rgba(18, 18, 18, 0.56);
   border: 0;
   border-radius: 4px;
   padding: 50;
@@ -30,7 +30,7 @@ window {
 mainbox {
   children: [ inputbar, listview];
   border-radius: 0;
-  border-color: #121212;
+  border-color: rgba(18, 18, 18, 0.70);
 }
 
 listview {
@@ -40,7 +40,7 @@ listview {
     cycle: false;
     dynamic: true;
     layout: vertical;
-    background-color: transparent;
+    background-color: rgba(18, 18, 18, 0.56);
 }
 
 element {
@@ -51,17 +51,11 @@ element {
 }
 
 element selected {
-  background-color: #121212;
+  background-color: rgba(18, 18, 18, 0.56);
   border: 0px 0px 5px 0px;
   border-color: #F12345;
   text-color: #FFFFFF;
   transition: 20;
-}
-
-element-icon {
-  size: 60;
-  horizontal-align: 0.5;
-  vertical-align: 0.5;
 }
 
 element-icon {
@@ -80,7 +74,7 @@ inputbar {
   children: [entry];
   padding: 4px 8px 4px 8px;
   color: #FFFFFF;
-  background-color: #121212;
+  background-color: rgba(18, 18, 18, 0.56);
 }
 
 prompt {
