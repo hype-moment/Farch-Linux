@@ -114,10 +114,12 @@ fi
 TRANSPARENCE_BAR(){
 Value=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 Color=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $3}')
-YAD=$(yad --posx=50 --posy=360 --scale --min-value=1 --max-value=100 --value="$Value" --fixed)
+YAD=$(yad --posx=50 --posy=360 --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i -ge 1 ]];then
+			sed -i "s/background-color:.*/background-color: rgba(18, 18, 18, 0."$i");/g" ~/.fvwm/rofi/Menus/Mini-menu-dark.rasi
+			sed -i "s/background-color:.*/background-color: rgba(245, 245, 245, 0."$i");/g" ~/.fvwm/rofi/Menus/Mini-menu-white.rasi
 			sed -i "s/background_color = .*/background_color = "$Color" "$i"/g" ~/.config/tint2/tint2rc
 			sed -i "s/background_color = .*/background_color = "$Color" "$i"/g" ~/.config/tint2/tools.tint2rc
 			pkill tint2
