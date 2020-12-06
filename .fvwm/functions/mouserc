@@ -31,8 +31,7 @@ AddToFunc RaiseMove
 + I Raise
 + M $0
 
-# Menus
-Mouse 1 R A
+Mouse 1 R A Exec exec pkill yad
 
 # Janelas minimizas
 Mouse 1 I A Iconify off
