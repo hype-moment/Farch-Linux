@@ -19,10 +19,10 @@ YAD=$(yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
 
 BORDERS_RADIUS(){
 	Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
-YAD=$(yad --posx=50 --posy=40 --scale --min-value=1 --max-value=12 --value="$Value" --fixed)
+YAD=$(yad --posx=50 --posy=40 --scale --min-value=0 --max-value=12 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
-		if [[ $i -ge 1 ]];then
+		if [[ $i -ge 0 ]];then
 			sed -i "s/corner-radius.*/corner-radius = $i;/g" ~/.fvwm/picom.conf
 		fi
 	done 
