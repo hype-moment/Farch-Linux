@@ -1,5 +1,9 @@
 #!/bin/bash
 
+UPDATES=$(checkupdates 2> /dev/null | wc -l)
+
+NOTIFY(){
+
 UPS=$(checkupdates | awk '{print $1}')
 UPSV=$(checkupdates | awk '{print $2}')
 UPSNV=$(checkupdates | awk '{print $4}')
@@ -16,4 +20,10 @@ foo=$?
 
 if [[ $foo -eq 1 ]]; then
 	xfce4-terminal -e "sudo pacman -Syu"
+fi
+
+}
+
+if [[ $UPDATES > 0 ]]; then
+	NOTIFY
 fi
