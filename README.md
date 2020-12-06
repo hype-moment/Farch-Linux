@@ -38,4 +38,16 @@
 		cp -r Tela-black-dark ~/.icons
 		cd themes
 		cp -r Midnight Midday ~/.themes
-		
+
+# Exemplos
+
+![alt text](https://github.com/hype-moment/Farch-Linux/blob/main/examples/clear.png)
+
+# Dark Mode
+
+![alt text](https://github.com/hype-moment/Farch-Linux/blob/main/examples/dark.png)
+
+# Light Mode
+
+![alt text](https://github.com/hype-moment/Farch-Linux/blob/main/examples/light.png)
+
