@@ -3,7 +3,7 @@
 CALENDAR(){
 	 yad --calendar --posx=1195 --posy=42 \
 --width=400 \
---button="Exit"
+--no-buttons
 }
 
 SET_COLOR(){
@@ -39,11 +39,8 @@ yad --posx=50 --posy=115 \
 --fixed \
 --button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
 --button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
---button="Cancel !$HOME/.fvwm/yad/Icons/cancel.png":3 
 
 foo=$?
-
-[[ $foo -eq 3 ]] && exit 0
 
 if [[ $foo -eq 1 ]]; then
 sed -i 's/gtk-theme-name=.*/gtk-theme-name=Midnight/g' ~/.config/gtk-3.0/settings.ini
@@ -88,11 +85,8 @@ SET_ICONS(){
 --button="MacOS":4 \
 --button="Classic":5 \
 --button="Simple":6 \
---button="Cancel !$HOME/.fvwm/yad/Icons/cancel.png":7 
 
 foo=$?
-
-[[ $foo -eq 7 ]] && exit 0
 
 if [[ $foo -eq 1 ]]; then
 sed -i 's/icons\/.*/icons\/blocks/g' ~/.fvwm/config && exit 0
@@ -168,14 +162,13 @@ fi
 
 
 POWER(){
-	yad --posx=1045 --posy=42 \
+	yad --posx=1140 --posy=42 \
 --fixed \
 --button="!$HOME/.fvwm/yad/Icons/power.png":1 \
 --button="!$HOME/.fvwm/yad/Icons/reboot.png":2 \
 --button="!$HOME/.fvwm/yad/Icons/lock.png":3 \
 --button="!$HOME/.fvwm/yad/Icons/hibernate.png":4 \
 --button="!$HOME/.fvwm/yad/Icons/exit.png":5 \
---button="Cancel !$HOME/.fvwm/yad/Icons/power_cancel.png":6 
 
 foo=$?
 
@@ -194,9 +187,6 @@ elif [[ $foo -eq 4 ]]; then
 elif [[ $foo -eq 5 ]]; then
 	pkill -u -9 $USER
 
-elif [[ $foo -eq 6 ]]; then 
-	exit 0
-
 fi
 }
 
@@ -207,11 +197,8 @@ POSITION(){
 --button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
 --button="Right !$HOME/.fvwm/yad/Icons/right.png":3 \
 --button="Bottom !$HOME/.fvwm/yad/Icons/bottom.png":4 \
---button="Cancel !$HOME/.fvwm/yad/Icons/cancel.png":5 
 
 foo=$?
-
-[[ $foo -eq 5 ]] && exit 0
 
 if [[ $foo -eq 1 ]]; then
 sed -i 's/TitleAt.*/TitleAtLeft/g' ~/.fvwm/functions/window_decorrc && exit 0
@@ -235,11 +222,8 @@ PRINT(){
 --button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
 --button="!$HOME/.fvwm/yad/Icons/time.png":3 \
 --button="!$HOME/.fvwm/yad/Icons/win.png":4 \
---button="Cancel !$HOME/.fvwm/yad/Icons/cancel.png":5 
 
 foo=$?
-
-[[ $foo -eq 5 ]] && exit 0
 
 if [[ $foo -eq 1 ]]; then
 scrot -d 1 'My_FVWM_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f' && exit 0
@@ -262,11 +246,8 @@ yad --posx=50 --posy=350 \
 --fixed \
 --button="Enable":1 \
 --button="Disable":2 \
---button="Cancel !$HOME/.fvwm/yad/Icons/cancel.png":3 
 
 foo=$?
-
-[[ $foo -eq 3 ]] && exit 0
 
 if [[ $foo -eq 1 ]]; then
 	sed -i 's/.*blur.sh/+ I Exec exec sh ~\/.fvwm\/scripts\/blur.sh/g' ~/.fvwm/functions/autostartrc
