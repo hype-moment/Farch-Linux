@@ -1,14 +1,16 @@
 #!/bin/bash
 
 CALENDAR(){
-	 yad --calendar --posx=1195 --posy=42 \
---width=400 \
---no-buttons
+	pkill yad
+	yad --calendar --posx=1195 --posy=42 \
+		--width=400 \
+		--no-buttons
 }
 
 SET_COLOR(){
 	Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
-YAD=$(yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
+YAD=$(pkill yad
+yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
@@ -18,10 +20,11 @@ YAD=$(yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
 }
 
 BORDERS_RADIUS(){
-	Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
-YAD=$(yad --posx=50 --posy=40 \
---scale --min-value=1 --max-value=12 --value="$Value" \
---fixed --heigth="100")
+Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
+YAD=$(pkill yad
+		yad --posx=50 --posy=40 \
+			--scale --min-value=1 --max-value=12 --value="$Value" \
+			--fixed --heigth="100")
 
 	for i in "$YAD"; do
 		if [[ "$i" > "0" ]];then
@@ -31,12 +34,13 @@ YAD=$(yad --posx=50 --posy=40 \
 }
 
 THEME_MODE(){
-	Alfa=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
+Alfa=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 
-yad --posx=50 --posy=115 \
---fixed \
---button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
---button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
+	pkill yad
+	yad --posx=50 --posy=115 \
+		--fixed \
+		--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
+		--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
 
 foo=$?
 
@@ -64,8 +68,9 @@ fi
 }
 
 FRAME_TRANSPARENCE(){
-	Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
-YAD=$(yad --posx=50 --posy=50 --scale --max-value=99 --value="$Value" --fixed)
+Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
+YAD=$(pkill yad
+		yad --posx=50 --posy=50 --scale --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
@@ -75,14 +80,15 @@ YAD=$(yad --posx=50 --posy=50 --scale --max-value=99 --value="$Value" --fixed)
 }
 
 SET_ICONS(){
-	yad --posx=50 --posy=225 \
---fixed \
---button="Blocks":1 \
---button="Cicles":2 \
---button="W10":3 \
---button="MacOS":4 \
---button="Classic":5 \
---button="Simple":6 \
+pkill yad
+yad --posx=50 --posy=225 \
+	--fixed \
+	--button="Blocks":1 \
+	--button="Cicles":2 \
+	--button="W10":3 \
+	--button="MacOS":4 \
+	--button="Classic":5 \
+	--button="Simple":6 \
 
 foo=$?
 
@@ -110,7 +116,8 @@ fi
 TRANSPARENCE_BAR(){
 Value=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 Color=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $3}')
-YAD=$(yad --posx=50 --posy=360 --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
+YAD=$(pkill yad
+	yad --posx=50 --posy=360 --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i -ge 1 ]];then
@@ -125,14 +132,15 @@ YAD=$(yad --posx=50 --posy=360 --scale --min-value=1 --max-value=99 --value="$Va
 }
 
 MPD(){
+	pkill yad
 	yad --posx=50 --posy=305 \
---fixed \
---button="!$HOME/.fvwm/yad/Icons/music.png":1 \
---button="!$HOME/.fvwm/yad/Icons/prev.png":2 \
---button="!$HOME/.fvwm/yad/Icons/play.png":3 \
---button="!$HOME/.fvwm/yad/Icons/pause.png":4 \
---button="!$HOME/.fvwm/yad/Icons/next.png":5 \
---button="!$HOME/.fvwm/yad/Icons/exit_mpd.png":6 \
+		--fixed \
+		--button="!$HOME/.fvwm/yad/Icons/music.png":1 \
+		--button="!$HOME/.fvwm/yad/Icons/prev.png":2 \
+		--button="!$HOME/.fvwm/yad/Icons/play.png":3 \
+		--button="!$HOME/.fvwm/yad/Icons/pause.png":4 \
+		--button="!$HOME/.fvwm/yad/Icons/next.png":5 \
+		--button="!$HOME/.fvwm/yad/Icons/exit_mpd.png":6 \
 
 
 foo=$?
@@ -160,13 +168,14 @@ fi
 
 
 POWER(){
+	pkill yad
 	yad --posx=1140 --posy=42 \
---fixed \
---button="!$HOME/.fvwm/yad/Icons/power.png":1 \
---button="!$HOME/.fvwm/yad/Icons/reboot.png":2 \
---button="!$HOME/.fvwm/yad/Icons/lock.png":3 \
---button="!$HOME/.fvwm/yad/Icons/hibernate.png":4 \
---button="!$HOME/.fvwm/yad/Icons/exit.png":5 \
+		--fixed \
+		--button="!$HOME/.fvwm/yad/Icons/power.png":1 \
+		--button="!$HOME/.fvwm/yad/Icons/reboot.png":2 \
+		--button="!$HOME/.fvwm/yad/Icons/lock.png":3 \
+		--button="!$HOME/.fvwm/yad/Icons/hibernate.png":4 \
+		--button="!$HOME/.fvwm/yad/Icons/exit.png":5 \
 
 foo=$?
 
@@ -189,12 +198,13 @@ fi
 }
 
 POSITION(){
+	pkill yad
 	yad --posx=50 --posy=148 \
---fixed \
---button="Left !$HOME/.fvwm/yad/Icons/left.png":1 \
---button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
---button="Right !$HOME/.fvwm/yad/Icons/right.png":3 \
---button="Bottom !$HOME/.fvwm/yad/Icons/bottom.png":4 \
+		--fixed \
+		--button="Left !$HOME/.fvwm/yad/Icons/left.png":1 \
+		--button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
+		--button="Right !$HOME/.fvwm/yad/Icons/right.png":3 \
+		--button="Bottom !$HOME/.fvwm/yad/Icons/bottom.png":4 \
 
 foo=$?
 
@@ -214,12 +224,13 @@ fi
 }
 
 PRINT(){
+	pkill yad
 	yad --posx=50 --posy=265 \
---fixed \
---button="!$HOME/.fvwm/yad/Icons/shot.png":1 \
---button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
---button="!$HOME/.fvwm/yad/Icons/time.png":3 \
---button="!$HOME/.fvwm/yad/Icons/win.png":4 \
+		--fixed \
+		--button="!$HOME/.fvwm/yad/Icons/shot.png":1 \
+		--button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
+		--button="!$HOME/.fvwm/yad/Icons/time.png":3 \
+		--button="!$HOME/.fvwm/yad/Icons/win.png":4 \
 
 foo=$?
 
@@ -239,11 +250,11 @@ fi
 }
 
 START_BLUR(){
-
-yad --posx=50 --posy=350 \
---fixed \
---button="Enable":1 \
---button="Disable":2 \
+	pkill yad
+	yad --posx=50 --posy=350 \
+		--fixed \
+		--button="Enable":1 \
+		--button="Disable":2 \
 
 foo=$?
 
@@ -261,12 +272,13 @@ WEB_SEARCH(){
 Search(){
 
 Entry(){
-yad --licon ~/.fvwm/yad/Icons/google.png \
---no-buttons \
---entry \
---posx=50 --posy=852 \
---completion \
---fixed
+	pkill yad
+	yad --licon ~/.fvwm/yad/Icons/google.png \
+		--no-buttons \
+		--entry \
+		--posx=50 --posy=852 \
+		--completion \
+		--fixed
 }
 
 go="$(Entry)"
@@ -282,12 +294,14 @@ Search
 
 RUN_APP(){
 
-RUN=$(yad --licon ~/.fvwm/yad/Icons/terminal.png \
---no-buttons \
---entry \
---posx=50 --posy=815 \
---completion \
---fixed)
+RUN=$(
+	pkill yad
+	yad --licon ~/.fvwm/yad/Icons/terminal.png \
+		--no-buttons \
+		--entry \
+		--posx=50 --posy=815 \
+		--completion \
+		--fixed)
 
 exec $RUN 
 
