@@ -26,8 +26,6 @@ YAD=$(yad --posx=50 --posy=40 \
 	for i in "$YAD"; do
 		if [[ "$i" > "0" ]];then
 			sed -i "s/corner-radius.*/corner-radius = $i;/g" ~/.fvwm/picom.conf
-		else
-			sed -i "s/corner-radius.*/corner-radius = 0;/g" ~/.fvwm/picom.conf
 		fi
 	done 
 }
