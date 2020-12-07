@@ -9,7 +9,12 @@
 ###### graphicsmagick
 ###### wmctrl
 
-# Programas usados
+<h1 align="center"> Programas usados </h1>
+
+|Terminal|Efeitos|Barra|Menu|PopUps|Screenshots|Visualizar imagens|Planos de fundo|Bloqueio de tela|Icones extras|Musica|video|
+| -------- | -------- | -------- |-------- | -------- | -------- | --------| -------- | -------- | -------- | -------- |
+|xfce4-terminal|picon-rounded-corners|tint2|rofi|yad|scrot|viewnior|feh|i3-lock|icons-in-terminal|mpc,mpc,ncmpcpp|parole|
+
 
 ###### xfce4-terminal (Como emulador de terminal)
 ###### picon-rounded-corners (Para efeitos e transparencia)
@@ -24,7 +29,7 @@
 ###### mpd mpc ncmpcpp (Para musicas)
 ###### parole (Para videos)
 
-# Instalação
+<h1 align="center"> Instalação </h1>
 
 ### Clone o repositorio
 
