@@ -51,3 +51,10 @@
 
 ![alt text](https://github.com/hype-moment/Farch-Linux/blob/main/examples/light.png)
 
+# Icones das janelas
+
+Altere os icones das janelas de forma facil, usando a barra lateral esquerda 
+clicando no icone "Select title bar icons". 
+Escolha entre 6 opções.
+
+![alt text](https://github.com/hype-moment/Farch-Linux/blob/main/examples/icons.png)
