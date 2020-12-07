@@ -1,16 +1,15 @@
 #!/bin/bash
 
 CALENDAR(){
-	pkill yad
 	yad --calendar --posx=1195 --posy=42 \
 		--width=400 \
-		--no-buttons
+		--no-buttons --close-on-unfocus
 }
 
 SET_COLOR(){
 	Value=$(cat ~/.fvwm/functions/window_decorrc | grep Tint | awk '{print $2}')
-YAD=$(pkill yad
-yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
+YAD=$(yad --posx=50 --posy=42 --close-on-unfocus \
+		  --init-color=$Value --color --gtk-palette --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
@@ -21,10 +20,9 @@ yad --posx=50 --posy=42 --init-color=$Value --color --gtk-palette --fixed)
 
 BORDERS_RADIUS(){
 Value=$(cat ~/.fvwm/picom.conf | grep corner-radius | sed 's/.*= //g;s/;//g')
-YAD=$(pkill yad
-		yad --posx=50 --posy=40 \
-			--scale --min-value=1 --max-value=12 --value="$Value" \
-			--fixed --heigth="100")
+YAD=$(yad --posx=50 --posy=40 \
+		  --scale --min-value=1 --max-value=12 --value="$Value" \
+		  --fixed --heigth="100" --close-on-unfocus)
 
 	for i in "$YAD"; do
 		if [[ "$i" > "0" ]];then
@@ -36,9 +34,8 @@ YAD=$(pkill yad
 THEME_MODE(){
 Alfa=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 
-	pkill yad
 	yad --posx=50 --posy=115 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="Dark !$HOME/.fvwm/yad/Icons/dark.png":1 \
 		--button="Light !$HOME/.fvwm/yad/Icons/light.png":2 \
 
@@ -69,8 +66,8 @@ fi
 
 FRAME_TRANSPARENCE(){
 Value=$(cat ~/.fvwm/picom.conf | grep frame-opacity | awk '{print $3}' | sed 's/.*\.//g;s/;//g')
-YAD=$(pkill yad
-		yad --posx=50 --posy=50 --scale --max-value=99 --value="$Value" --fixed)
+YAD=$(yad --posx=50 --posy=50 --close-on-unfocus \
+          --scale --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
@@ -80,9 +77,8 @@ YAD=$(pkill yad
 }
 
 SET_ICONS(){
-pkill yad
 yad --posx=50 --posy=225 \
-	--fixed \
+	--fixed --close-on-unfocus \
 	--button="Blocks":1 \
 	--button="Cicles":2 \
 	--button="W10":3 \
@@ -116,8 +112,8 @@ fi
 TRANSPARENCE_BAR(){
 Value=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $4}')
 Color=$(cat ~/.config/tint2/tint2rc | grep "background_color =" | awk '{print $3}')
-YAD=$(pkill yad
-	yad --posx=50 --posy=360 --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
+YAD=$(yad --posx=50 --posy=360 --close-on-unfocus \
+          --scale --min-value=1 --max-value=99 --value="$Value" --fixed)
 
 	for i in "$YAD"; do
 		if [[ $i -ge 1 ]];then
@@ -132,15 +128,16 @@ YAD=$(pkill yad
 }
 
 MPD(){
-	pkill yad
 	yad --posx=50 --posy=305 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="!$HOME/.fvwm/yad/Icons/music.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/prev.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/play.png":3 \
 		--button="!$HOME/.fvwm/yad/Icons/pause.png":4 \
 		--button="!$HOME/.fvwm/yad/Icons/next.png":5 \
-		--button="!$HOME/.fvwm/yad/Icons/exit_mpd.png":6 \
+		--button="!$HOME/.fvwm/yad/Icons/repeat.png":6 \
+		--button="!$HOME/.fvwm/yad/Icons/random.png":7 \
+		--button="!$HOME/.fvwm/yad/Icons/exit_mpd.png":8
 
 
 foo=$?
@@ -160,17 +157,38 @@ elif [[ $foo -eq 4 ]]; then
 elif [[ $foo -eq 5 ]]; then
 	mpc next
 
-elif [[ $foo -eq 6 ]]; then 
-	pkill mpd & pkill yad
+elif [[ $foo -eq 6 ]]; then
+	mpc repeat
+
+elif [[ $foo -eq 7 ]]; then
+	mpc random
+
+elif [[ $foo -eq 8 ]]; then 
+	pkill mpd 
 
 fi
 }
 
 
 POWER(){
-	pkill yad
+
+SHUTDOWN(){
+
+yad --timeout=10 --timeout-indicator=bottom \
+	--width=500 --posx=550 --posy=400 \
+	--text="Shutdown in 10 seconds" --text-align=center --auto-close \
+    --button="Cancel":1 
+foo=$?
+
+if [[ $foo -eq 1 ]]; then
+	shutdown -c
+else
+	shutdown now
+fi
+}
+
 	yad --posx=1140 --posy=42 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="!$HOME/.fvwm/yad/Icons/power.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/reboot.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/lock.png":3 \
@@ -180,7 +198,7 @@ POWER(){
 foo=$?
 
 if [[ $foo -eq 1 ]]; then
-	shutdown now
+	SHUTDOWN
 
 elif [[ $foo -eq 2 ]]; then
 	reboot
@@ -198,9 +216,8 @@ fi
 }
 
 POSITION(){
-	pkill yad
 	yad --posx=50 --posy=148 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="Left !$HOME/.fvwm/yad/Icons/left.png":1 \
 		--button="Top !$HOME/.fvwm/yad/Icons/top.png":2 \
 		--button="Right !$HOME/.fvwm/yad/Icons/right.png":3 \
@@ -224,9 +241,8 @@ fi
 }
 
 PRINT(){
-	pkill yad
 	yad --posx=50 --posy=265 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="!$HOME/.fvwm/yad/Icons/shot.png":1 \
 		--button="!$HOME/.fvwm/yad/Icons/cut.png":2 \
 		--button="!$HOME/.fvwm/yad/Icons/time.png":3 \
@@ -250,9 +266,8 @@ fi
 }
 
 START_BLUR(){
-	pkill yad
 	yad --posx=50 --posy=350 \
-		--fixed \
+		--fixed --close-on-unfocus \
 		--button="Enable":1 \
 		--button="Disable":2 \
 
@@ -272,9 +287,8 @@ WEB_SEARCH(){
 Search(){
 
 Entry(){
-	pkill yad
 	yad --licon ~/.fvwm/yad/Icons/google.png \
-		--no-buttons \
+		--no-buttons --close-on-unfocus \
 		--entry \
 		--posx=50 --posy=852 \
 		--completion \
@@ -295,9 +309,8 @@ Search
 RUN_APP(){
 
 RUN=$(
-	pkill yad
 	yad --licon ~/.fvwm/yad/Icons/terminal.png \
-		--no-buttons \
+		--no-buttons --close-on-unfocus \
 		--entry \
 		--posx=50 --posy=815 \
 		--completion \
