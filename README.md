@@ -1,6 +1,6 @@
 # Farch-Linux
 
-# Dependencias
+<h1 align="center"> Dependencias </h1>
 
 ###### imagemagick 
 ###### xorg-xwd 
