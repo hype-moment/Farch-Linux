@@ -12,7 +12,7 @@
 <h1 align="center"> Programas usados </h1>
 
 |Terminal|Efeitos|Barra|Menu|PopUps|Screenshots|Visualizar imagens|Planos de fundo|Bloqueio de tela|Icones extras|Musica|video|
-| -------- | -------- | -------- |-------- | -------- | -------- | --------| -------- | -------- | -------- | -------- |
+| -------- | -------- | -------- |-------- | -------- | -------- | --------| -------- | -------- | -------- | -------- | -------- |
 |xfce4-terminal|picon-rounded-corners|tint2|rofi|yad|scrot|viewnior|feh|i3-lock|icons-in-terminal|mpc,mpc,ncmpcpp|parole|
 
 
