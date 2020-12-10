@@ -14,6 +14,9 @@ YAD=$(yad --posx=50 --posy=42 --close-on-unfocus \
 	for i in "$YAD"; do
 		if [[ $i > 0 ]];then
 			sed -i "s/Tint .*/Tint $i 100/g" ~/.fvwm/functions/window_decorrc
+			sed -i "s/separator_color .*/separator_color = $i 100/g" ~/.config/tint2/tools.tint2rc
+			pkill tint2
+			tint2 & tint2 -c ~/.config/tint2/tools.tint2rc
 		fi
 	done 
 }
@@ -265,23 +268,6 @@ scrot -d 2 -b -u 'My_Window_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f' && exit 0
 fi
 }
 
-START_BLUR(){
-	yad --posx=50 --posy=350 \
-		--fixed --close-on-unfocus \
-		--button="Enable":1 \
-		--button="Disable":2 \
-
-foo=$?
-
-if [[ $foo -eq 1 ]]; then
-	sed -i 's/.*blur.sh/+ I Exec exec sh ~\/.fvwm\/scripts\/blur.sh/g' ~/.fvwm/functions/autostartrc
-	sh ~/.fvwm/scripts/blur.sh
-elif [[ $foo -eq 2 ]]; then
-	sed -i 's/.*blur.sh/# + I Exec exec sh ~\/.fvwm\/scripts\/blur.sh/g' ~/.fvwm/functions/autostartrc
-	killall sh
-fi
-}
-
 WEB_SEARCH(){
 
 Search(){
@@ -320,12 +306,37 @@ exec $RUN
 
 }
 
+WALL(){
+
+RANDOM_WALL(){
+	img=(`find ~/Imagens -name '*' -exec file {} \; | grep -o -P '^.+: \w+ image' | cut -d':' -f1`)
+while true
+do
+   feh --bg-scale "${img[$RANDOM % ${#img[@]} ]}"
+sleep 10m
+done
+}
+
+yad --posx=50 --posy=350 \
+		--fixed --close-on-unfocus \
+		--button="Enable":1 \
+		--button="Disable":2 \
+
+foo=$?
+
+if [[ $foo -eq 1 ]]; then
+	RANDOM_WALL
+elif [[ $foo -eq 2 ]]; then
+	killall sh
+fi
+
+}
 
 case "$1" in
 
 Calendar) CALENDAR 	;;
 Color ) SET_COLOR 	;;
-Fake_Blur) START_BLUR 	;;
+wall) WALL 	;;
 Power) POWER 	;;
 Transparence_bar) TRANSPARENCE_BAR 	;;
 Radius) BORDERS_RADIUS 	;;
