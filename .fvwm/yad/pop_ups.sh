@@ -317,21 +317,12 @@ exec $RUN
 }
 
 WALL(){
-pkill yad
 
-RANDOM_WALL(){
 img=(`find ~/Imagens -name '*' -exec file {} \; | grep -o -P '^.+: \w+ image' | cut -d':' -f1`)
    feh --bg-scale "${img[$RANDOM % ${#img[@]} ]}"
-}
 
-yad --posx=46 --posy=345 \
-		--fixed \
-		--button="Next":1
-foo=$?
-
-if [[ $foo -eq 1 ]]; then
-	RANDOM_WALL
-fi
+exec $img
+return
 
 }
 
